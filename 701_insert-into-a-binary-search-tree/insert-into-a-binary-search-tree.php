@@ -1,38 +1,51 @@
 <?php
 
-class TreeNode {
+class TreeNode
+{
     public $val = null;
     public $left = null;
     public $right = null;
-    function __construct($val = 0, $left = null, $right = null) {
+
+    function __construct($val = 0, $left = null, $right = null)
+    {
         $this->val = $val;
         $this->left = $left;
         $this->right = $right;
     }
 }
 
-class Solution {
-
-    private $nodes;
+class Solution
+{
 
     /**
      * @param TreeNode $root
      * @param Integer $val
      * @return TreeNode
      */
-    function insertIntoBST($root, $val) {
-        $this->findNode($root);
-    }
-
-    function findNode($root) {
-        if (is_null($root->left) || is_null($root->right)) {
-            $this->nodes[] = $root;
+    function insertIntoBST($root, $val)
+    {
+        if (is_null($root)) {
+            return new TreeNode($val);
         }
-        if (is_null($root->left) && is_null($root->right)) {
-            return;
+        $pos = $root;
+        while (!is_null($pos)) {
+            if ($val < $pos->val) {
+                if (is_null($pos->left)) {
+                    $pos->left = new TreeNode($val);
+                    break;
+                } else {
+                    $pos = $pos->left;
+                }
+            } else {
+                if (is_null($pos->right)) {
+                    $pos->right = new TreeNode($val);
+                    break;
+                } else {
+                    $pos = $pos->right;
+                }
+            }
         }
-        $this->findNode($root->left);
-        $this->findNode($root->right);
+        return $root;
     }
 }
 
